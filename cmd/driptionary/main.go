@@ -1,7 +1,7 @@
 package main
 
 import (
-	tui "driptionary/internal/tui/teaModel"
+	"driptionary/internal/tui"
 	tea "github.com/charmbracelet/bubbletea"
 	"log"
 )

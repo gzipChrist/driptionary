@@ -1,10 +1,7 @@
-package tuiModel
+package tui
 
 import (
 	"driptionary/internal/consts"
-	tuiCmd "driptionary/internal/tui/teaCmd"
-	"driptionary/internal/tui/tuiMsg"
-	"driptionary/internal/tui/views"
 	"fmt"
 	"github.com/charmbracelet/bubbles/textinput"
 	tea "github.com/charmbracelet/bubbletea"
@@ -52,20 +49,20 @@ func (m MainModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case tea.KeyEnter:
 			m.isLoading = true
 			val := m.textInput.Value()
-			return m, tuiCmd.HandleSearch(val)
+			return m, HandleSearch(val)
 
 		case tea.KeyCtrlC, tea.KeyEsc:
 			return m, tea.Quit
 		}
 
 	// We got a valid response from the API.
-	case tuiMsg.SearchCompleteMsg:
+	case SearchCompleteMsg:
 		m.textInput.Reset()
 		m.textResult = string(msg)
 		return m, nil
 
 	// We got an error. Assign it in the Model, and we'll handle it in the View.
-	case tuiMsg.ErrMsg:
+	case ErrMsg:
 		m.err = msg
 		return m, nil
 	}
@@ -79,9 +76,9 @@ func (m MainModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 // View renders a string representation of the MainModel.
 func (m MainModel) View() string {
 	return fmt.Sprintf("%s\n%s\n%s\n\n%s\n",
-		views.Logo,
+		Logo,
 		m.textInput.View(),
-		views.BuildTextInputView(m.textResult),
-		views.Help,
+		BuildTextInputView(m.textResult),
+		Help,
 	)
 }

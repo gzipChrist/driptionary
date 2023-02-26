@@ -1,4 +1,4 @@
-package tuiMsg
+package tui
 
 type (
 	SearchCompleteMsg string
